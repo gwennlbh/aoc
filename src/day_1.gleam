@@ -10,9 +10,7 @@ const initial_position = 50
 const dial_size = 100
 
 pub fn part_1() -> Int {
-  simplifile.read("../inputs/1.txt")
-  |> result.unwrap("")
-  |> string.split("\r\n")
+  utils.read_to_lines("../inputs/1.txt")
   |> list.map(parse_instruction)
   |> list.filter(is_valid)
   |> list.fold(#(initial_position, 0), fn(state, instruction) {
@@ -27,9 +25,7 @@ pub fn part_1() -> Int {
 }
 
 pub fn part_2() -> Int {
-  simplifile.read("../inputs/1.txt")
-  |> result.unwrap("")
-  |> string.split("\r\n")
+  utils.read_to_lines("../inputs/1.txt")
   |> list.map(parse_instruction)
   |> list.filter(is_valid)
   // |> list.take(50)
