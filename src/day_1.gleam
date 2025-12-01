@@ -26,6 +26,24 @@ pub fn part_1() -> Int {
   |> utils.second
 }
 
+pub fn part_2() -> Int {
+  simplifile.read("../inputs/1.txt")
+  |> result.unwrap("")
+  |> string.split("\r\n")
+  |> list.map(parse_instruction)
+  |> list.filter(is_valid)
+  // |> list.take(50)
+  |> list.fold(#(initial_position, 0), fn(state, instruction) {
+    let #(position, count) = state
+
+    #(
+      apply_instruction(position, instruction),
+      count + dial_overflows(position, instruction),
+    )
+  })
+  |> utils.second
+}
+
 type Instruction {
   Left(Int)
   Right(Int)
@@ -37,6 +55,17 @@ fn is_valid(instruction: Instruction) -> Bool {
     Unknown -> False
     _ -> True
   }
+}
+
+fn dial_overflows(position: Int, instruction: Instruction) -> Int {
+  case instruction {
+    Left(stops) -> position - stops
+    Right(stops) -> position + stops
+    Unknown -> 0
+  }
+  |> int.floor_divide(by: dial_size)
+  |> result.unwrap(0)
+  |> int.absolute_value
 }
 
 fn apply_instruction(position: Int, instruction: Instruction) -> Int {
