@@ -44,28 +44,23 @@ fn expand_range(range: String) -> List(String) {
 }
 
 fn is_silly(number: String) -> Bool {
-  case string.length(number) % 2 {
-    1 -> False
-    0 -> number_of_unique_parts(number, into: 2) == 1
-    _ -> False
-  }
+  has_one_unique_part(number, chunks: 2)
 }
 
 fn is_very_silly(number: String) -> Bool {
   list.range(1, to: string.length(number) / 2)
-  |> list.filter(fn(chunksize) { string.length(number) % chunksize == 0 })
-  |> list.map(number_of_unique_parts(number, into: _))
-  |> list.any(fn(parts) { parts == 1 })
+  |> list.any(has_one_unique_part(number, chunks: _))
 }
 
-fn number_of_unique_parts(subject: String, into number_of_parts: Int) -> Int {
-  let s =
-    string.to_graphemes(subject)
-    |> list.sized_chunk(string.length(subject) / number_of_parts)
-    |> list.map(string.join(_, with: ""))
-    |> set.from_list
-
-//   echo s |> set.to_list
-
-  s |> set.size
+fn has_one_unique_part(subject: String, chunks number_of_chunks: Int) -> Bool {
+  case string.length(subject) % number_of_chunks {
+    0 ->
+      string.to_graphemes(subject)
+      |> list.sized_chunk(string.length(subject) / number_of_chunks)
+      |> list.map(string.join(_, with: ""))
+      |> set.from_list
+      |> set.size
+      == 1
+    _ -> False
+  }
 }
