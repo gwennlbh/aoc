@@ -4,3 +4,6 @@ today:
 day_01:
     cd src; gleam run -t javascript --runtime bun 
     
+day_02:
+    cd src; gleam run -t javascript --runtime bun 
+    

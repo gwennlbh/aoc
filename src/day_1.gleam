@@ -1,3 +1,4 @@
+import gleam/float
 import gleam/int
 import gleam/list
 import gleam/result
@@ -28,13 +29,17 @@ pub fn part_2() -> Int {
   utils.read_to_lines("../inputs/1.txt")
   |> list.map(parse_instruction)
   |> list.filter(is_valid)
-  // |> list.take(50)
   |> list.fold(#(initial_position, 0), fn(state, instruction) {
     let #(position, count) = state
 
     #(
       apply_instruction(position, instruction),
-      count + dial_overflows(position, instruction),
+      count
+        + dial_overflows(position, instruction)
+        + case apply_instruction(position, instruction) {
+        0 -> 1
+        _ -> 0
+      },
     )
   })
   |> utils.second
@@ -59,9 +64,9 @@ fn dial_overflows(position: Int, instruction: Instruction) -> Int {
     Right(stops) -> position + stops
     Unknown -> 0
   }
+  |> int.absolute_value
   |> int.floor_divide(by: dial_size)
   |> result.unwrap(0)
-  |> int.absolute_value
 }
 
 fn apply_instruction(position: Int, instruction: Instruction) -> Int {
