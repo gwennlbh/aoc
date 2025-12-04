@@ -7,3 +7,9 @@ day_01:
 day_02:
     cd src; gleam run -t javascript --runtime bun 
     
+day_03:
+    cd src; gleam run -t javascript --runtime bun 
+    
+day_04:
+    just day_03
+    
