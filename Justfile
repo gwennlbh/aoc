@@ -2,14 +2,13 @@ today:
     just day_{{ datetime_utc("%d") }}
 
 day_01:
-    cd src; gleam run -t javascript --runtime bun 
-    
+    just gleam
 day_02:
-    cd src; gleam run -t javascript --runtime bun 
-    
+    just gleam
 day_03:
-    cd src; gleam run -t javascript --runtime bun 
-    
+    just gleam
 day_04:
-    just day_03
-    
+    just gleam
+
+gleam:
+    cd src; gleam run -t javascript --runtime bun 
